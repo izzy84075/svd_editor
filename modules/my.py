@@ -41,7 +41,7 @@ class myTable(gridlib.PyGridTableBase):
     wItem = namedtuple('WorkItem', 'atrib, item')
 
     def __init__(self, parent, data):
-        gridlib.PyGridTableBase.__init__(self)
+        gridlib.GridTableBase.__init__(self)
         self.parent = parent
         self.data = data
         self.colorInactive = wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT)
