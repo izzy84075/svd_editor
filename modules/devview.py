@@ -78,31 +78,31 @@ class panlCpu(wx.Panel):
         self.endi = wx.Choice(self, choices=('little', 'big', 'selectable'))
 
         self.mpu = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.mpu.SetToolTip('Indicate whether the processor is equipped with a memory protection unit (MPU)')
+        self.mpu.SetToolTipString('Indicate whether the processor is equipped with a memory protection unit (MPU)')
 
         self.fpu = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.fpu.SetToolTip('Indicate whether the processor is equipped with a hardware floating point unit (FPU)')
+        self.fpu.SetToolTipString('Indicate whether the processor is equipped with a hardware floating point unit (FPU)')
 
         self.dbl = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.dbl.SetToolTip('Indicate whether the processor is equipped with a double precision FPU')
+        self.dbl.SetToolTipString('Indicate whether the processor is equipped with a double precision FPU')
 
         self.icache = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.icache.SetToolTip('Indicate whether the processor has an instruction cache')
+        self.icache.SetToolTipString('Indicate whether the processor has an instruction cache')
 
         self.dcache = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.dcache.SetToolTip('Indicate whether the processor has a data cache')
+        self.dcache.SetToolTipString('Indicate whether the processor has a data cache')
 
         self.itcm = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.itcm.SetToolTip('Indicate whether the processor has an instruction tightly coupled memory')
+        self.itcm.SetToolTipString('Indicate whether the processor has an instruction tightly coupled memory')
 
         self.dtcm = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.itcm.SetToolTip('Indicate whether the processor has an data tightly coupled memory')
+        self.itcm.SetToolTipString('Indicate whether the processor has an data tightly coupled memory')
 
         self.vtor = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.vtor.SetToolTip('Indicate whether the Vector Table Offset Register (VTOR) is implemented in Cortex-M0+ based devices')
+        self.vtor.SetToolTipString('Indicate whether the Vector Table Offset Register (VTOR) is implemented in Cortex-M0+ based devices')
 
         self.syst = wx.CheckBox(self, style=wx.ALIGN_RIGHT)
-        self.syst.SetToolTip('Indicate whether the processor implements a vendor-specific System Tick Timer')
+        self.syst.SetToolTipString('Indicate whether the processor implements a vendor-specific System Tick Timer')
 
         archBox = wx.FlexGridSizer(1, 6, 0, 2)
         archBox.AddGrowableCol(1, 0)

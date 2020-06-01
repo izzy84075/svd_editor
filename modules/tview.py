@@ -22,7 +22,7 @@ class View(wx.Panel):
 
     def OnSelChanged(self, event):
         item = self.tree.GetFocusedItem()
-        obj = self.tree.GetItemData(item)
+        obj = self.tree.GetPyData(item)
         my.post_event(self.GetGrandParent(), my.EVT_SELECTED, obj)
 
     def Reload(self, obj):
@@ -52,15 +52,15 @@ class View(wx.Panel):
         tree.DeleteAllItems()
         self.data.clear()
         root = tree.AddRoot(device.name)
-        tree.SetItemData(root, device)
+        tree.SetPyData(root, device)
         self.data[device] = root
         for p in device.peripherals:
             pi = tree.AppendItem(root, p.name)
-            tree.SetItemData(pi, p)
+            tree.SetPyData(pi, p)
             self.data[p] = pi
             for r in p.registers:
                 ri = tree.AppendItem(pi, r.name)
-                tree.SetItemData(ri, r)
+                tree.SetPyData(ri, r)
                 self.data[r] = ri
         tree.UnselectAll()
         tree.Expand(root)
