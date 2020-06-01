@@ -99,7 +99,7 @@ class fieldsTable(my.myTable):
     def GetAttr(self, row, col, kind):
         data = self.workset[row]
         if col == 4:
-            return self.Attr('DropDown') if data[1].access else self.Attr('DropGray')
+            return self.Attr('DropDown') if data.item.access else self.Attr('DropGray')
         return self.Attr('Gray') if data.atrib == 'new' else None
 
     def SetValue(self, row, col, val):
@@ -163,20 +163,20 @@ class View(wx.Panel):
         self.rtable = registerTable(self, data)
         self.rgrid = my.myGrid(rbox)
         self.rgrid.SetTable(self.rtable, True)
-        self.rgrid.ShowScrollbars(wx.SHOW_SB_NEVER, wx.SHOW_SB_NEVER)
         # we should create extra col (mb bug in wx)
         self.rgrid.HideCol(1)
         self.rgrid.HideColLabels()
         self.rgrid.SetRowLabelSize(-1)
+        self.rgrid.ShowScrollbars(wx.SHOW_SB_NEVER, wx.SHOW_SB_NEVER)
 
         fbox = wx.StaticBox(self, label='Register Bitfields')
         self.ftable = fieldsTable(self, data)
         self.fgrid = my.myGrid(fbox)
         self.fgrid.SetTable(self.ftable, True)
-        self.fgrid.SetColLabelSize(-1)
-        self.fgrid.SetSelectionMode(gridlib.Grid.wxGridSelectRows)
-        self.fgrid.ShowScrollbars(wx.SHOW_SB_NEVER, wx.SHOW_SB_ALWAYS)
         self.fgrid.HideRowLabels()
+        self.fgrid.SetColLabelSize(-1)
+        self.fgrid.ShowScrollbars(wx.SHOW_SB_NEVER, wx.SHOW_SB_ALWAYS)
+        self.fgrid.SetSelectionMode(gridlib.Grid.wxGridSelectRows)
 
         self.Bind(wx.EVT_SIZE, self.onResize)
         self.Bind(my.MY_EVT, self.OnMyEvent)
@@ -197,6 +197,7 @@ class View(wx.Panel):
         eid = event.GetId()
         if eid == my.EVT_REG_ACCS_CHANGED:
             self.fgrid.ForceRefresh()
+            self.ftable.Reload()
         elif eid == my.EVT_FIELD_ADDED or eid == my.EVT_FIELD_DELETED:
             self.ftable.Reload()
         wx.PostEvent(self.GetGrandParent(), event)

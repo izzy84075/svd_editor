@@ -9,6 +9,7 @@ class View(wx.Panel):
         self.data = {}
         self.tree = wx.TreeCtrl(self)
         self.tree.AddRoot('FROM_RUSSIA_WITH_LOVE')
+        self.dragitem = None
 
         self.Bind(wx.EVT_SIZE, self.onResize)
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChanged)

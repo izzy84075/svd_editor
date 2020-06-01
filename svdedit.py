@@ -1,15 +1,13 @@
 #!/usr/bin/python
 
 import wx
-import modules.svd as svd
-import modules.my as my
-import modules.regview as regview
-import modules.perview as perview
-import modules.devview as devview
-import modules.tview as tview
 
-from collections import defaultdict
-import gc
+import modules.devview as devview
+import modules.my as my
+import modules.perview as perview
+import modules.regview as regview
+import modules.svd as svd
+import modules.tview as tview
 
 
 class MyFrame(wx.Frame):
@@ -63,6 +61,13 @@ class MyFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnAbout, AboutNfo)
 
         self.Bind(my.MY_EVT, self.OnMyCommand)
+        
+        accel_tbl = wx.AcceleratorTable([
+                                            (wx.ACCEL_CTRL,  ord('A'), wx.ID_ADD ),
+                                            (wx.ACCEL_CTRL,  ord('S'), wx.ID_SAVE),
+                                            (wx.ACCEL_CTRL,  ord('C'), wx.ID_DUPLICATE),
+                                        ])
+        self.SetAcceleratorTable(accel_tbl)
 
         # Create a main window
         self.splitter = wx.SplitterWindow(self)
@@ -99,7 +104,7 @@ class MyFrame(wx.Frame):
                 new = perview.View(self.splitter, eobj)
             if isinstance(eobj, svd.device):
                 new = devview.View(self.splitter, eobj)
-            if new:
+            if new is not None and new != old:
                 self.splitter.ReplaceWindow(old, new)
                 self.view = new
                 old.Destroy()
@@ -163,7 +168,7 @@ class MyFrame(wx.Frame):
 
     def OnLoad(self, event):
         LoadSvdDialog = wx.FileDialog(self,
-                                      'Open System View Ddescription file', '', '',
+                                      'Open System View Description file', '', '',
                                       'SVD files(*.svd)|*.svd', wx.FD_OPEN)
         if LoadSvdDialog.ShowModal() == wx.ID_OK:
             self.filename = LoadSvdDialog.GetPath()

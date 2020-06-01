@@ -1,6 +1,6 @@
 ﻿from collections import namedtuple
 import wx
-import wx.grid as gridlib
+import wx.grid
 import wx.lib.newevent
 
 Evt, MY_EVT = wx.lib.newevent.NewCommandEvent()
@@ -37,53 +37,60 @@ def post_event(dest, event, object):
     wx.PostEvent(dest, ev)
 
 
-class myTable(gridlib.PyGridTableBase):
+class myTable(wx.grid.PyGridTableBase):
     wItem = namedtuple('WorkItem', 'atrib, item')
 
     def __init__(self, parent, data):
-        gridlib.PyGridTableBase.__init__(self)
+        wx.grid.PyGridTableBase.__init__(self)
         self.parent = parent
         self.data = data
         self.colorInactive = wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT)
 
-        self.editor = gridlib.GridCellChoiceEditor(['default', 'read-only', 'read-write', 'write-only', 'writeOnce', 'read-writeOnce'])
+        self.editor = wx.grid.GridCellChoiceEditor(['default', 'read-only', 'read-write', 'write-only', 'writeOnce', 'read-writeOnce'])
+        #self.editor.IncRef()
+        #self.editor.IncRef()
 
-        self.attr_dd = gridlib.GridCellAttr()
+        self.attr_dd = wx.grid.GridCellAttr()
         self.attr_dd.SetEditor(self.editor)
+        #self.attr_dd.IncRef()
 
-        self.attr_dg = gridlib.GridCellAttr()
+        self.attr_dg = wx.grid.GridCellAttr()
         self.attr_dg.SetEditor(self.editor)
         self.attr_dg.SetTextColour(self.colorInactive)
+        #self.attr_dg.IncRef()
 
-        self.attr_ro = gridlib.GridCellAttr()
+        self.attr_ro = wx.grid.GridCellAttr()
         self.attr_ro.SetReadOnly(True)
         self.attr_ro.SetTextColour(self.colorInactive)
+        #self.attr_ro.IncRef()
 
-        self.attr_g = gridlib.GridCellAttr()
+        self.attr_g = wx.grid.GridCellAttr()
         self.attr_g.SetTextColour(self.colorInactive)
+        #self.attr_g.IncRef()
 
-    def __del__(self):
-        self.attr_dd.DecRef()
-        self.attr_dg.DecRef()
-        self.attr_ro.DecRef()
-        self.attr_g.DecRef()
-        self.editor.DecRef()
-        gridlib.PyGridTableBase.__del__(self)
+    #def __del__(self):
+        #self.attr_g.DecRef()
+        #self.attr_ro.DecRef()
+        #self.attr_dg.DecRef()
+        #self.attr_dd.DecRef()
+        #self.editor.DecRef()
+        #wx.grid.GridTableBase.__del__(self)
 
     def Attr(self, atype):
-        attr = {'ReadOnly': self.attr_ro,
-                'DropDown': self.attr_dd,
-                'DropGray': self.attr_dg,
-                'Gray': self.attr_g
+        attr = {'ReadOnly': self.attr_ro.Clone(),
+                'DropDown': self.attr_dd.Clone(),
+                'DropGray': self.attr_dg.Clone(),
+                'Gray': self.attr_g.Clone()
         }.get(atype, None)
-        if attr:
-            attr.IncRef()
+        #if attr:
+            #attr.IncRef()
+            #attr.SetEditor(self.editor)
         return attr
 
 
-class myGrid(gridlib.Grid):
+class myGrid(wx.grid.Grid):
     def __init__(self, parent):
-        gridlib.Grid.__init__(self, parent)
+        wx.grid.Grid.__init__(self, parent)
         self.parent = parent
         self.DisableDragGridSize()
 

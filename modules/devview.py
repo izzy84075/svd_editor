@@ -1,5 +1,4 @@
 import wx
-import wx.grid as gridlib
 import my
 
 
@@ -150,7 +149,7 @@ class View(wx.Panel):
         self.dtable = deviceTable(self, data)
         self.dgrid = my.myGrid(devbox)
         self.dgrid.SetTable(self.dtable, True)
-        self.dgrid.ShowScrollbars(wx.SHOW_SB_NEVER, wx.wx.SHOW_SB_NEVER)
+        self.dgrid.ShowScrollbars(wx.SHOW_SB_NEVER, wx.SHOW_SB_NEVER)
         # we should create extra col (mb bug in wx)
         self.dgrid.HideCol(1)
         self.dgrid.HideColLabels()

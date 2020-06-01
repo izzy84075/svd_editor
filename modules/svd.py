@@ -69,8 +69,7 @@ class basedata(object):
     @name.setter
     def name(self, val):
         try:
-            s = val.encode('ascii', errors='ignore')
-            self._name = '_'.join(s.split())
+            self._name = val.encode('ascii', errors='ignore')
         except:
             pass
 
